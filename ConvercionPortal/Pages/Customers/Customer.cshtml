@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col">
                         <a asp-page="/Customers/CustomerList" class="btn btn-success buttonShadow">Back</a>
-                        <a href="#" class="btn btn-primary buttonShadow">Edit</a>
+                        <a asp-page="/Customers/Edit" asp-route-ID="@Model.Customer.Id" class="btn btn-primary buttonShadow">Edit</a>
                         <a href="#" class="btn btn-danger buttonShadow">Delete</a>
                     </div>
                 </div>

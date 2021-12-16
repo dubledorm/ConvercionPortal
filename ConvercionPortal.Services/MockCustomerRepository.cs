@@ -23,6 +23,17 @@ namespace ConvercionPortal.Services
              };
         }
 
+        public bool Delete(int id)
+        {
+            Customer? customerForDelete = GetCustomerById(id);
+            
+            if (customerForDelete == null)
+                return false;
+
+
+            return _customers.Remove(customerForDelete);
+        }
+
         public IEnumerable<Customer> GetAllCustomers()
         {
             return _customers;
@@ -31,6 +42,31 @@ namespace ConvercionPortal.Services
         public Customer? GetCustomerById(int id)
         {
             return _customers.FirstOrDefault(customer => customer.Id == id);
+        }
+
+        public Customer? Insert(Customer customer)
+        {
+            int maxId = 0;
+
+            _customers.ForEach(customer => maxId = customer.Id > maxId ? customer.Id : maxId);
+
+            customer.Id = maxId + 1;
+            _customers.Add(customer);
+            return customer;
+        }
+
+        public bool Update(Customer customer)
+        {
+            Customer? customerForUpdate = GetCustomerById(customer.Id);
+
+            if (customerForUpdate == null)
+                return false;
+
+            // Копирование
+            customerForUpdate.Name = customer.Name;
+            customerForUpdate.Description = customer.Description;
+
+            return true;
         }
     }
 }

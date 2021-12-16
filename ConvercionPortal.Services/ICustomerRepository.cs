@@ -12,5 +12,11 @@ namespace ConvercionPortal.Services
         IEnumerable<Customer> GetAllCustomers();
 
         Customer? GetCustomerById(int id);
+
+        bool Update(Customer customer);
+
+        bool Delete(int id);
+
+        Customer? Insert(Customer customer);
     }
 }
