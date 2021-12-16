@@ -1,10 +1,26 @@
 ﻿@page
+@using ConvercionPortal.Models
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Список контрагентов</h1>
+
+<div class="row">
+        <div class="col-1"><strong>Id</strong></div>
+        <div class="col-3"><strong>Название</strong></div>
+        <div class="col-6"><strong>Комментарии</strong></div>
+        <div class="col-2"><strong>Действия</strong></div>
+    </div>
+@foreach(Customer customer in Model.Customers)
+{
+    <div class="row m-1">
+        <div class="col-md-1 col-sm-12">@customer.Id</div>
+        <div class="col-md-3 col-sm-12">@customer.Name</div>
+        <div class="col-md-6 col-sm-12">@customer.Description</div>
+        <div class="col-md-2 col-sm-12">
+           <a asp-page="/Customers/Customer" asp-route-ID="@customer.Id" class="btn btn-success">Просмотр</a>
+        </div>
+    </div>
+}
