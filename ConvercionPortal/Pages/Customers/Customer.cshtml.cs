@@ -8,7 +8,7 @@ namespace ConvercionPortal.Pages.Customers
     public class CustomerModel : PageModel
     {
         private readonly ICustomerRepository _db;
-        public Customer Customer { get; set; }
+        public Customer? Customer { get; set; }
 
         public CustomerModel(ICustomerRepository db)
         {

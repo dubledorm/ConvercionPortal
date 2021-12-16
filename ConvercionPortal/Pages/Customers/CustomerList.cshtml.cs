@@ -1,17 +1,19 @@
-﻿using ConvercionPortal.Models;
+using ConvercionPortal.Models;
 using ConvercionPortal.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ConvercionPortal.Pages
+namespace ConvercionPortal.Pages.Customers
 {
-    public class IndexModel : PageModel
+    public class CustomerListModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
 
         private readonly ICustomerRepository _db;
 
-        public IndexModel(ILogger<IndexModel> logger, ICustomerRepository db)
+        public IEnumerable<Customer> Customers { get; set; }
+
+        public CustomerListModel(ILogger<IndexModel> logger, ICustomerRepository db)
         {
             _logger = logger;
             _db = db;
@@ -19,6 +21,7 @@ namespace ConvercionPortal.Pages
 
         public void OnGet()
         {
+            Customers = _db.GetAllCustomers();
         }
     }
 }
