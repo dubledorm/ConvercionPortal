@@ -46,9 +46,9 @@ namespace ConvercionPortal.Services
 
         public Customer? Insert(Customer customer)
         {
-            int maxId = 0;
+            int maxId = _customers.Max<Customer>( itemCustomer => itemCustomer.Id);
 
-            _customers.ForEach(customer => maxId = customer.Id > maxId ? customer.Id : maxId);
+            //_customers.ForEach(customer => maxId = customer.Id > maxId ? customer.Id : maxId);
 
             customer.Id = maxId + 1;
             _customers.Add(customer);

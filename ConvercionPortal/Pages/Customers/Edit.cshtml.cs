@@ -8,7 +8,10 @@ namespace ConvercionPortal.Pages.Customers
     public class EditModel : PageModel
     {
         private readonly ICustomerRepository _db;
+
+        [BindProperty]
         public Customer Customer { get; set; }
+
 
         public EditModel(ICustomerRepository db)
         {
@@ -16,22 +19,39 @@ namespace ConvercionPortal.Pages.Customers
         }
 
 
-        public IActionResult OnGet(int Id)
+        public IActionResult OnGet(int? Id)
         {
-            Customer? customer = _db.GetCustomerById(Id);
-            if (customer == null)
-                return RedirectToPage("/NotFound");
+            Customer? customer = null;
+            if (Id.HasValue)
+                customer = _db.GetCustomerById(Id.Value);
+            else
+                customer = new Customer();
 
+            if (customer == null)
+                return RedirectToPage("/Error");
             Customer = customer;
             return Page();
         }
 
-        public IActionResult OnPost(Customer customer)
-        {
-            if (_db.Update(customer))
-              return RedirectToPage("/Customers/Customer", new { id = customer.Id });
+        public IActionResult OnPost()
+        {  
+            if (!ModelState.IsValid)
+                return Page();
 
-            return RedirectToPage("/NotFound");
+            if (Customer.Id > 0)
+            {
+                if (_db.Update(Customer))
+                    return RedirectToPage("/Customers/Customer", new { id = Customer.Id });
+            }
+            else 
+            {   Customer? customer = _db.Insert(Customer); 
+                if (customer == null )
+                    return RedirectToPage("/Error");
+
+                Customer=customer;
+            }
+
+            return RedirectToPage("/Customers/Customer", new { id = Customer.Id });
         }
     }
 }
