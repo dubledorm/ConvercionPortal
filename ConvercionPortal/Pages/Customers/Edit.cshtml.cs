@@ -34,7 +34,7 @@ namespace ConvercionPortal.Pages.Customers
         }
 
         public IActionResult OnPost()
-        {  
+        {
             if (!ModelState.IsValid)
                 return Page();
 
@@ -43,12 +43,13 @@ namespace ConvercionPortal.Pages.Customers
                 if (_db.Update(Customer))
                     return RedirectToPage("/Customers/Customer", new { id = Customer.Id });
             }
-            else 
-            {   Customer? customer = _db.Insert(Customer); 
-                if (customer == null )
+            else
+            {
+                Customer? customer = _db.Insert(Customer);
+                if (customer == null)
                     return RedirectToPage("/Error");
 
-                Customer=customer;
+                Customer = customer;
             }
 
             return RedirectToPage("/Customers/Customer", new { id = Customer.Id });

@@ -1,6 +1,4 @@
-﻿using ConvercionPortal.Models;
-using ConvercionPortal.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using ConvercionPortal.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ConvercionPortal.Pages

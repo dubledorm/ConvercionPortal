@@ -1,9 +1,4 @@
 ﻿using ConvercionPortal.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConvercionPortal.Services
 {
@@ -12,10 +7,11 @@ namespace ConvercionPortal.Services
         private List<Customer> _customers;
 
         public MockCustomerRepository()
-        {  _customers = new List<Customer>()
+        {
+            _customers = new List<Customer>()
              {
-                new Customer() 
-                  { Id = 1, Name = "Рога и копыта"}, 
+                new Customer()
+                  { Id = 1, Name = "Рога и копыта"},
                 new Customer()
                   { Id = 2, Name = "Бешенный огурец", Description = "skd sad ,nd ,ANSAD "},
                 new Customer()
@@ -26,7 +22,7 @@ namespace ConvercionPortal.Services
         public bool Delete(int id)
         {
             Customer? customerForDelete = GetCustomerById(id);
-            
+
             if (customerForDelete == null)
                 return false;
 
@@ -34,9 +30,16 @@ namespace ConvercionPortal.Services
             return _customers.Remove(customerForDelete);
         }
 
-        public IEnumerable<Customer> GetAllCustomers()
-        {
-            return _customers;
+        public IEnumerable<Customer> GetAllCustomers(Dictionary<string, string> filter)
+        {   if (filter.Count == 0)
+               return _customers;
+
+            MockRepositoryFilter mockRepositoryFilter = new(filter);
+
+           var result = from customer in _customers 
+                         where mockRepositoryFilter.Compare(customer) //фильтрация по критерию
+                         select customer; // выбираем объект
+            return result;
         }
 
         public Customer? GetCustomerById(int id)
@@ -46,9 +49,7 @@ namespace ConvercionPortal.Services
 
         public Customer? Insert(Customer customer)
         {
-            int maxId = _customers.Max<Customer>( itemCustomer => itemCustomer.Id);
-
-            //_customers.ForEach(customer => maxId = customer.Id > maxId ? customer.Id : maxId);
+            int maxId = _customers.Max<Customer>(itemCustomer => itemCustomer.Id);
 
             customer.Id = maxId + 1;
             _customers.Add(customer);
