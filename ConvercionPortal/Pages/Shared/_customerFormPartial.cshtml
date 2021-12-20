@@ -20,13 +20,20 @@
 <circle cx="8" cy="4.5" r="1"/>
 </svg></span></label>
 						<input type="text" class="form-control" asp-for="@Model.Name">
+						<span asp-validation-for="@Model.Name" class="text-danger"></span>
 					</div>
 					<div class="mb-3">
 						<label asp-for="@Model.Description" class="form-label">Описание</label>
 						<input type="text" class="form-control" asp-for="@Model.Description">
+						<span asp-validation-for="@Model.Description" class="text-danger"></span>
 					</div>
 					<button type="submit" class="btn app-btn-primary" >Сохранить</button>
-					<a asp-page="/Customers/Customer" asp-route-ID="@Model.Id" class="btn app-btn-secondary">К просмотру</a>
+					@if (Model.Id > 0){
+						<a asp-page="/Customers/Customer" asp-route-ID="@Model.Id" class="btn app-btn-secondary">К просмотру</a>
+					} else
+					{
+						<a asp-page="/Customers/CustomerList" class="btn app-btn-secondary">К списку</a>
+					}
 				</form>
 			</div><!--//app-card-body-->
 						    
