@@ -20,6 +20,7 @@ namespace ConvercionPortal.Pages.Customers
 
         public void OnGet()
         {
+            ViewData["ActivePage"] = "CustomerList";
             //Dictionary<string, string> filter = new Dictionary<string, string>();
             //if (searchorders != null)
             //    filter.Add("name", searchorders);

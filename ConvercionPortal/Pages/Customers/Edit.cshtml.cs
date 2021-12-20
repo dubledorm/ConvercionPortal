@@ -21,6 +21,7 @@ namespace ConvercionPortal.Pages.Customers
 
         public IActionResult OnGet(int? Id)
         {
+            ViewData["ActivePage"] = "CustomerList";
             Customer? customer = null;
             if (Id.HasValue)
                 customer = _db.GetCustomerById(Id.Value);

@@ -16,6 +16,7 @@ namespace ConvercionPortal.Pages.Customers
 
         public void OnGet(int id)
         {
+            ViewData["ActivePage"] = "CustomerList";
             Customer = _db.GetCustomerById(id);
         }
     }

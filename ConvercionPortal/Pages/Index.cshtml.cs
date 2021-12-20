@@ -17,6 +17,7 @@ namespace ConvercionPortal.Pages
 
         public void OnGet()
         {
+            ViewData["ActivePage"] = "Index";
         }
     }
 }
