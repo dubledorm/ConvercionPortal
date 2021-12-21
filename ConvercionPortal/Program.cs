@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<ICustomerRepository, MockCustomerRepository>();
+builder.Services.AddSingleton<IConvercionTypeRepository, MockConvercionTypeRepository>();
 
 var app = builder.Build();
 
