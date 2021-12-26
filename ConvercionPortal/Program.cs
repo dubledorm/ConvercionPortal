@@ -1,10 +1,16 @@
 using ConvercionPortal.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContextPool<AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CustomerDBConnection"));
+});
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<ICustomerRepository, MockCustomerRepository>();
+builder.Services.AddScoped<ICustomerRepository, SQLCustomerRepository>();
 builder.Services.AddSingleton<IConvercionTypeRepository, MockConvercionTypeRepository>();
 
 var app = builder.Build();

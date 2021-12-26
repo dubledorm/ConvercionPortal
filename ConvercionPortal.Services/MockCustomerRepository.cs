@@ -2,7 +2,7 @@
 
 namespace ConvercionPortal.Services
 {
-    public class MockCustomerRepository : ICustomerRepository
+    public class MockCustomerRepository : ScopedRepository<Customer>, ICustomerRepository
     {
         private List<Customer> _customers;
 
@@ -19,6 +19,11 @@ namespace ConvercionPortal.Services
              };
         }
 
+        public void AddScopeRalation(string ScopeName, Func<string> PropertyGetter)
+        {
+            base.AddScopeRelation(ScopeName, PropertyGetter);
+        }
+
         public bool Delete(int id)
         {
             Customer? customerForDelete = GetCustomerById(id);
@@ -30,16 +35,18 @@ namespace ConvercionPortal.Services
             return _customers.Remove(customerForDelete);
         }
 
-        public IEnumerable<Customer> GetAllCustomers(Dictionary<string, string> filter)
-        {   if (filter.Count == 0)
-               return _customers;
+        public IEnumerable<Customer> GetAllCustomers()
+        {
+            return _customers;
+            //   if (filter.Count == 0)
+            //       return _customers;
 
-            MockRepositoryFilter mockRepositoryFilter = new(filter);
+            //    MockRepositoryFilter mockRepositoryFilter = new(filter);
 
-           var result = from customer in _customers 
-                         where mockRepositoryFilter.Compare(customer) //фильтрация по критерию
-                         select customer; // выбираем объект
-            return result;
+            //    var result = from customer in _customers 
+            //                 where mockRepositoryFilter.Compare(customer) //фильтрация по критерию
+            //                 select customer; // выбираем объект
+            //    return result;
         }
 
         public Customer? GetCustomerById(int id)

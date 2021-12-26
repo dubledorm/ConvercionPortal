@@ -1,5 +1,6 @@
 using ConvercionPortal.Models;
 using ConvercionPortal.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ConvercionPortal.Pages.Customers
@@ -16,27 +17,20 @@ namespace ConvercionPortal.Pages.Customers
         {
             _logger = logger;
             _db = db;
+            _db.AddScopeRalation("Name", ()=> SearchName);
+            _db.AddScopeRalation("Description", () => SearchDescription);
         }
 
         public void OnGet()
         {
             ViewData["ActivePage"] = "CustomerList";
-            //Dictionary<string, string> filter = new Dictionary<string, string>();
-            //if (searchorders != null)
-            //    filter.Add("name", searchorders);
-            Customers = _db.GetAllCustomers(createFiltersDictionary(Request.Query));
+            Customers = _db.GetAllCustomers();
         }
 
-        private Dictionary<string, string> createFiltersDictionary(IQueryCollection Query)
-        {
-            Dictionary<string, string> translateAttributtes = new() { { "searcholders", "Name" }, 
-                { "description", "Description" } };
+        [BindProperty(SupportsGet = true)]
+        public string SearchName { get; set; }
 
-            Dictionary<string, string> result = new Dictionary<string, string>();
-            foreach (var queryKey in Query.Keys)
-                if (translateAttributtes.ContainsKey(queryKey))
-                  result.Add(translateAttributtes[queryKey], Query[queryKey]);
-            return result;
-        }
+        [BindProperty(SupportsGet = true)]
+        public string SearchDescription { get; set; }
     }
 }

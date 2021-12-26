@@ -4,7 +4,7 @@ namespace ConvercionPortal.Services
 {
     public interface ICustomerRepository
     {
-        IEnumerable<Customer> GetAllCustomers(Dictionary<string, string> filter);
+        IEnumerable<Customer> GetAllCustomers();
 
         Customer? GetCustomerById(int id);
 
@@ -13,5 +13,7 @@ namespace ConvercionPortal.Services
         bool Delete(int id);
 
         Customer? Insert(Customer customer);
+
+        void AddScopeRalation(string ScopeName, Func<string> PropertyGetter);
     }
 }

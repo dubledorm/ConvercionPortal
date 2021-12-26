@@ -1,4 +1,5 @@
-﻿<div class="row g-3 mb-4 align-items-center justify-content-between">
+﻿@model ConvercionPortal.Pages.Customers.CustomerListModel
+<div class="row g-3 mb-4 align-items-center justify-content-between">
 	<div class="col-auto">
 		<h1 class="app-page-title mb-0">Контрагенты</h1>
 	</div>
@@ -9,10 +10,10 @@
 				<div class="col-auto">
 					<form class="table-search-form row gx-1 align-items-center" method="get" asp-page="/Customers/CustomerList">
 					    <div class="col-auto">
-					        <input type="text" id="search-name" name="searcholders" class="form-control search-orders" placeholder="Искать по названию" value="@ViewData["search_holder_text"]">
+					        <input type="text" asp-for="SearchName" class="form-control search-orders" placeholder="Искать по названию">
 					    </div>
 						<div class="col-auto">
-					        <input type="text" id="search-description" name="description" class="form-control search-orders" placeholder="Искать по описанию" value="@ViewData["search_description_text"]">
+					        <input type="text" asp-for="SearchDescription" class="form-control search-orders" placeholder="Искать по описанию">
 					    </div>
 					    <div class="col-auto">
 					        <button type="submit" class="btn app-btn-secondary">Искать</button>

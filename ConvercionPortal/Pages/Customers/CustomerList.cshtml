@@ -2,8 +2,6 @@
 @using ConvercionPortal.Models
 @model ConvercionPortal.Pages.Customers.CustomerListModel
 @{
-    ViewData["search_holder_text"] = Request.Query.FirstOrDefault(p => p.Key == "searcholders").Value;
-    ViewData["search_description_text"] = Request.Query.FirstOrDefault(p => p.Key == "description").Value;
 }
 
 <partial name="_CustomerListHeaderPartial.cshtml" />
