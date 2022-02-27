@@ -20,7 +20,7 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
         }
         public void OnGet()
         {
-            ViewData["ActivePage"] = "EncloseAndCNStatusList";
+            ViewData["ActivePage"] = "EncloseAndStatuses";
             EncloseAndCNStatuses = _db.GetAll(null);
         }
     }

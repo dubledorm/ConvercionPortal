@@ -32,7 +32,7 @@
                                 <td class="cell">@encloseAndCNStatus.OwnerId</td>
                                 <td class="cell">@encloseAndCNStatus.TroubleFlag</td>
 								<td class="cell">@encloseAndCNStatus.FinishedFlag</td>
-								<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/EncloseAndStatus" asp-route-ID="@encloseAndCNStatus.Id">Открыть</a></td>
+								<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/EncloseAndStatus" asp-route-ID="@encloseAndCNStatus.Id-@encloseAndCNStatus.OwnerId">Открыть</a></td>
 							</tr>
                         }
                     </tbody>

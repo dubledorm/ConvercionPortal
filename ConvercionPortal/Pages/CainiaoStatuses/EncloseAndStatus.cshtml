@@ -6,25 +6,21 @@
 <h1 class="app-page-title">Вложимое и статус Cainiao</h1>
 <div class="row g-4 settings-section">
 	<div class="col-12 col-md-4">
-		<h3 class="section-title">@Model.encloseAndCNStatus?.TroubleFlag</h3>
-		<div class="section-intro">@Model.encloseAndCNStatus?.OwnerId</div>
+		<h3 class="section-title">Id=@Model.encloseAndCNStatus?.Id OwnerId=@Model.encloseAndCNStatus?.OwnerId</h3>
+		<div class="section-intro">-----</div>
 	</div>
 	<div class="col-12 col-md-8">
 		<div class="app-card app-card-settings shadow-sm p-4">
 						    
 			<div class="app-card-body">
 				<div class="mb-2"><strong>Id:</strong> @Model.encloseAndCNStatus.Id</div>
+				<div class="mb-2"><strong>OwnerId:</strong> @Model.encloseAndCNStatus.OwnerId</div>
 				<div class="mb-2"><strong>Флаг проблемы:</strong> @Model.encloseAndCNStatus.TroubleFlag</div>
+				<div class="mb-2"><strong>Завершена:</strong> @Model.encloseAndCNStatus.FinishedFlag</div>
 				<hr class="my-4">
 				<div class="row justify-content-between">
 					<div class="col-auto">
-						<a class="btn app-btn-secondary" asp-page="/ConvercionTypes/Edit" asp-route-ID="@Model.encloseAndCNStatus.Id">Редактировать</a>
-					</div>
-					<div class="col-auto">
 						<a class="btn app-btn-primary" asp-page="/CainiaoStatuses/EncloseAndStatusList">К списку</a>
-					</div>
-					<div class="col-auto">
-						<a class="btn app-btn-secondary" href="#">Удалить</a>
 					</div>
 				</div>
 								    

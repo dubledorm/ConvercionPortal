@@ -15,10 +15,11 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
             _db = db;
         }
 
-        public void OnGet(int id, int ownerId)
-        {
-            ViewData["ActivePage"] = "ConvercionTypes";
-            encloseAndCNStatus = _db.GetById(id, ownerId);
+        public void OnGet(string separatedIdAndOwnerId)
+        {   IdAndOwnerId idAndOwnerId = new IdAndOwnerId(separatedIdAndOwnerId); 
+
+            ViewData["ActivePage"] = "EncloseAndStatuses";
+            encloseAndCNStatus = _db.GetById(idAndOwnerId.Id, idAndOwnerId.OwnerId);
         }
     }
 }
