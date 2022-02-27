@@ -12,6 +12,8 @@ builder.Services.AddDbContextPool<AppDbContext>(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICustomerRepository, SQLCustomerRepository>();
 builder.Services.AddSingleton<IConvercionTypeRepository, MockConvercionTypeRepository>();
+builder.Services.AddSingleton<IEncloseAndCNStatusRepository, MockEncloseAndCNStatusRepository>();
+
 
 var app = builder.Build();
 
