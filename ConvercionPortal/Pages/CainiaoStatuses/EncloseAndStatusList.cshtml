@@ -1,11 +1,7 @@
 ﻿@page
 @using ConvercionPortal.Models
 @model ConvercionPortal.Pages.CainiaoStatuses.EncloseAndStatusListModel
-@{
-    ViewData["search-name-text"] = Request.Query.FirstOrDefault(p => p.Key == "search-name").Value;
-    ViewData["search-url-text"] = Request.Query.FirstOrDefault(p => p.Key == "search-url").Value;
-    ViewData["search-description-text"] = Request.Query.FirstOrDefault(p => p.Key == "search-description").Value;
-}
+
 
 <partial name="_EncloseAndStatusListHeaderPartial.cshtml" />
 

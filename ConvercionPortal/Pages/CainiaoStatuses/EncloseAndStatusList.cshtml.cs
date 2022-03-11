@@ -21,7 +21,25 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
         public void OnGet()
         {
             ViewData["ActivePage"] = "EncloseAndStatuses";
-            EncloseAndCNStatuses = _db.GetAll(null);
+            ViewData["search-id-text"] = Request.Query.FirstOrDefault(p => p.Key == "search-id").Value;
+            ViewData["search-owner-id-text"] = Request.Query.FirstOrDefault(p => p.Key == "search-owner-id").Value;
+            EncloseAndCNStatuses = _db.GetAll(createFiltersDictionary(Request.Query));
+        }
+
+
+        private Dictionary<string, string> createFiltersDictionary(IQueryCollection Query)
+        {
+            Dictionary<string, string> translateAttributtes = new()
+            {
+                { "search-id", "Id" },
+                { "search-owner-id", "OwnerId" }
+            };
+
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            foreach (var queryKey in Query.Keys)
+                if (translateAttributtes.ContainsKey(queryKey))
+                    result.Add(translateAttributtes[queryKey], Query[queryKey]);
+            return result;
         }
     }
 }
