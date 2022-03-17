@@ -1,4 +1,6 @@
 ﻿using ConvercionPortal.Models;
+using Microsoft.Extensions.Configuration;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -8,16 +10,23 @@ using System.Threading.Tasks;
 
 namespace ConvercionPortal.Services
 {
-    internal class MongoEncloseAndCNStatusRepository : ScopedRepository<EncloseAndCNStatus>, IEncloseAndCNStatusRepository
+    public class MongoEncloseAndCNStatusRepository : ScopedRepository<EncloseAndCNStatus>, IEncloseAndCNStatusRepository
     {
+        const string ConfigSectionName = "CainiaoStatusesDB";
+        const string ConfigDBConnectionName = "ConnectionString";
+        const string ConfigDBName = "DatabaseName";
+        const string EncloseAndStatusesCollectionName = "EncloseAndEvents";
+
         private readonly MongoClient _client;
-        IMongoDatabase _database;
+        private readonly IMongoDatabase _database;
+        private readonly IMongoCollection<EncloseAndCNStatus> _collection;
 
 
-        public MongoEncloseAndCNStatusRepository(string mongoConnectionString, string mongoDatabaseName) : base()
+        public MongoEncloseAndCNStatusRepository(IConfiguration configuration) : base()
         {
-            _client = new MongoClient(mongoConnectionString);
-            _database = _client.GetDatabase(mongoDatabaseName);
+            _client = new MongoClient(configuration.GetSection(ConfigSectionName)[ConfigDBConnectionName]);
+            _database = _client.GetDatabase(configuration.GetSection(ConfigSectionName)[ConfigDBName]);
+            _collection = _database.GetCollection<EncloseAndCNStatus>(EncloseAndStatusesCollectionName);
             //  AddScope("Name", ScopeByName);
             //  AddScope("Description", ScopeByDescription);
         }
@@ -27,9 +36,23 @@ namespace ConvercionPortal.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<EncloseAndCNStatus> GetAll(Dictionary<string, string> filter)
+        public async Task<IEnumerable<EncloseAndCNStatus>> GetAll(Dictionary<string, string> filter)
         {
-            throw new NotImplementedException();
+            var _encloseAndCNStatuses = new List<EncloseAndCNStatus>();
+            var documentFilter = new BsonDocument();
+            var people = await _collection.Find(documentFilter).ToListAsync();
+           /* using (var cursor = await _collection.FindAsync(documentFilter))
+            {
+                while (await cursor.MoveNextAsync())
+                {
+                    var encloses = cursor.Current;
+                    foreach (EncloseAndCNStatus doc in encloses)
+                    {
+                        _encloseAndCNStatuses.Add(doc);
+                    }
+                }
+            }*/
+            return _encloseAndCNStatuses;
         }
 
         public EncloseAndCNStatus? GetById(int id, int ownerId)

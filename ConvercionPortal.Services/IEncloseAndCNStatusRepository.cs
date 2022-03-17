@@ -4,7 +4,7 @@ namespace ConvercionPortal.Services
 {
     public interface IEncloseAndCNStatusRepository
     {
-        IEnumerable<EncloseAndCNStatus> GetAll(Dictionary<string, string> filter);
+        Task<IEnumerable<EncloseAndCNStatus>> GetAll(Dictionary<string, string> filter);
 
         EncloseAndCNStatus? GetById(int id, int ownerId);
 

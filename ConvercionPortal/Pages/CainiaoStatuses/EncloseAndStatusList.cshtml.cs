@@ -18,12 +18,13 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
             _logger = logger;
             _db = db;
         }
-        public void OnGet()
+        public async Task OnGetAsync()
         {
+            _logger.LogInformation("А вот этот сообщение из EncloseAndStatusListModel");
             ViewData["ActivePage"] = "EncloseAndStatuses";
             ViewData["search-id-text"] = Request.Query.FirstOrDefault(p => p.Key == "search-id").Value;
             ViewData["search-owner-id-text"] = Request.Query.FirstOrDefault(p => p.Key == "search-owner-id").Value;
-            EncloseAndCNStatuses = _db.GetAll(createFiltersDictionary(Request.Query));
+            EncloseAndCNStatuses = await _db.GetAll(createFiltersDictionary(Request.Query));
         }
 
 

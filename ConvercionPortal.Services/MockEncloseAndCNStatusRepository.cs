@@ -37,7 +37,7 @@ namespace ConvercionPortal.Services
             return itemForDelete;
         }
 
-        public IEnumerable<EncloseAndCNStatus> GetAll(Dictionary<string, string> filter)
+        public async Task<IEnumerable<EncloseAndCNStatus>> GetAll(Dictionary<string, string> filter)
         {
             //if (filter.Count == 0)
             //    return _encloseAndCNStatuses;
@@ -47,6 +47,7 @@ namespace ConvercionPortal.Services
             //var result = from encloseAndCNStatus in _encloseAndCNStatuses
             //             where mockConvercionTypeFiler.Compare(encloseAndCNStatus) //фильтрация по критерию
             //             select encloseAndCNStatus; // выбираем объект
+            //return new Task<IEnumerable<EncloseAndCNStatus>>(() => _encloseAndCNStatuses);
             return _encloseAndCNStatuses;
         }
 

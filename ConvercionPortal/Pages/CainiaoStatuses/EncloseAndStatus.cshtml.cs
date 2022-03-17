@@ -16,7 +16,7 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
         }
 
         public void OnGet(string separatedIdAndOwnerId)
-        {   IdAndOwnerId idAndOwnerId = new IdAndOwnerId(separatedIdAndOwnerId); 
+        {   IdAndOwnerId idAndOwnerId = new IdAndOwnerId(separatedIdAndOwnerId);
 
             ViewData["ActivePage"] = "EncloseAndStatuses";
             encloseAndCNStatus = _db.GetById(idAndOwnerId.Id, idAndOwnerId.OwnerId);
