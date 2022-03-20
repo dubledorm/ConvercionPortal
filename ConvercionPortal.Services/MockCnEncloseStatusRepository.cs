@@ -3,25 +3,25 @@ using Microsoft.Extensions.Logging;
 
 namespace ConvercionPortal.Services
 {
-    public class MockEncloseAndCNStatusRepository : ScopedRepository<EncloseAndCNStatus>,  IEncloseAndCNStatusRepository
+    public class MockCnEncloseStatusRepository : ScopedRepository<CnEncloseStatus>,  ICnEncloseStatusRepository
     {
-        private List<EncloseAndCNStatus> _encloseAndCNStatuses;
+        private List<CnEncloseStatus> _encloseAndCNStatuses;
 
-        public MockEncloseAndCNStatusRepository(ILogger<MongoEncloseAndCNStatusRepository> logger): base(logger)
+        public MockCnEncloseStatusRepository(ILogger<MongoCnEncloseStatusRepository> logger): base(logger)
         {
-            _encloseAndCNStatuses = new List<EncloseAndCNStatus>()
+            _encloseAndCNStatuses = new List<CnEncloseStatus>()
              {
-                new EncloseAndCNStatus()
+                new CnEncloseStatus()
                   { EncloseId = 1, EncloseOwnerId = 1, TroubleFlag = false, FinishedFlag = true, 
-                    StatusHistory = new List<CainiaoStatusEvent>() { } 
+                    StatusHistory = new List<CnStatusEvent>() { } 
                 },
-                new EncloseAndCNStatus()
+                new CnEncloseStatus()
                   { EncloseId = 2, EncloseOwnerId = 1, TroubleFlag = false, FinishedFlag = false,
-                    StatusHistory = new List<CainiaoStatusEvent>() { }
+                    StatusHistory = new List<CnStatusEvent>() { }
                 },
-                new EncloseAndCNStatus()
+                new CnEncloseStatus()
                   { EncloseId = 3, EncloseOwnerId = 1, TroubleFlag = true, FinishedFlag = false,
-                    StatusHistory = new List<CainiaoStatusEvent>() { }
+                    StatusHistory = new List<CnStatusEvent>() { }
                 }
             };
         }
@@ -31,9 +31,9 @@ namespace ConvercionPortal.Services
             throw new NotImplementedException();
         }
 
-        public EncloseAndCNStatus? Delete(int id, int ownerId)
+        public CnEncloseStatus? Delete(int id, int ownerId)
         {
-            EncloseAndCNStatus? itemForDelete = GetById(id, ownerId);
+            CnEncloseStatus? itemForDelete = GetById(id, ownerId);
 
             if (itemForDelete == null)
                 return null;
@@ -43,7 +43,7 @@ namespace ConvercionPortal.Services
             return itemForDelete;
         }
 
-        public IEnumerable<EncloseAndCNStatus> GetAll()
+        public IEnumerable<CnEncloseStatus> GetAll()
         {
             //if (filter.Count == 0)
             //    return _encloseAndCNStatuses;
@@ -57,7 +57,7 @@ namespace ConvercionPortal.Services
             return _encloseAndCNStatuses;
         }
 
-        public EncloseAndCNStatus? GetById(int id, int ownerId)
+        public CnEncloseStatus? GetById(int id, int ownerId)
         {
             return _encloseAndCNStatuses.FirstOrDefault(encloseAndCNStatus =>
             {
@@ -66,9 +66,9 @@ namespace ConvercionPortal.Services
             });
         }
 
-        public EncloseAndCNStatus? Insert(EncloseAndCNStatus encloseAndCNStatus)
+        public CnEncloseStatus? Insert(CnEncloseStatus encloseAndCNStatus)
         {
-            int maxId = _encloseAndCNStatuses.Max<EncloseAndCNStatus>(itemEncloseAndCNStatus => itemEncloseAndCNStatus.EncloseId);
+            int maxId = _encloseAndCNStatuses.Max<CnEncloseStatus>(itemEncloseAndCNStatus => itemEncloseAndCNStatus.EncloseId);
 
             encloseAndCNStatus.EncloseId = maxId + 1;
             encloseAndCNStatus.EncloseOwnerId = 1;
@@ -78,9 +78,9 @@ namespace ConvercionPortal.Services
 
        
 
-        public EncloseAndCNStatus? Update(EncloseAndCNStatus encloseAndCNStatus)
+        public CnEncloseStatus? Update(CnEncloseStatus encloseAndCNStatus)
         {
-            EncloseAndCNStatus? encloseAndCNStatusForUpdate = GetById(encloseAndCNStatus.EncloseId, 
+            CnEncloseStatus? encloseAndCNStatusForUpdate = GetById(encloseAndCNStatus.EncloseId, 
                 encloseAndCNStatus.EncloseOwnerId);
 
             if (encloseAndCNStatusForUpdate == null)

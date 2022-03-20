@@ -8,11 +8,11 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
     public class EncloseAndStatusModel : PageModel
     {
         private readonly ILogger<EncloseAndStatusModel> _logger;
-        private readonly IEncloseAndCNStatusRepository _db;
+        private readonly ICnEncloseStatusRepository _db;
         [BindProperty]
-        public EncloseAndCNStatus? encloseAndCNStatus { get; set; }
+        public CnEncloseStatus? encloseAndCNStatus { get; set; }
 
-        public EncloseAndStatusModel(ILogger<EncloseAndStatusModel> logger, IEncloseAndCNStatusRepository db)
+        public EncloseAndStatusModel(ILogger<EncloseAndStatusModel> logger, ICnEncloseStatusRepository db)
         {
             _logger = logger;
             _db = db;

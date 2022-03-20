@@ -33,12 +33,12 @@
 					</thead>
 
                     <tbody>
-                        @foreach(CainiaoStatusEvent CnEvent in Model.encloseAndCNStatus.StatusHistory)
+                        @foreach(CnStatusEvent CnEvent in Model.encloseAndCNStatus.StatusHistory)
                         {
                             <tr>
 								<td class="cell">@CnEvent.PPStatus</td>
                                 <td class="cell">@CnEvent.PPWarehouseType</td>
-                                <td class="cell">@CnEvent.CainiaoStatusCode</td>
+                                <td class="cell">@CnEvent.CnStatusCode</td>
 								<td class="cell">@CnEvent.DateOfCreate</td>
 								<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/EncloseAndStatus" asp-route-ID="@Model.encloseAndCNStatus.StringId()" asp-route-ORDER="0">Открыть</a></td>
 							</tr>
@@ -57,7 +57,7 @@
 				<hr class="my-4">
 				<div class="row justify-content-between">
 					<div class="col-auto">
-						<a class="btn app-btn-primary" asp-page="/CainiaoStatuses/EncloseAndStatusList">К списку</a>
+						<a class="btn app-btn-primary" asp-page="/CainiaoStatuses/EncloseStatusList">К списку</a>
 					</div>
 				</div>
 								    

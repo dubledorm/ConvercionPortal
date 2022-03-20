@@ -8,15 +8,15 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
     public class NewCNStatusEventModel : PageModel
     {
         private readonly ILogger<EncloseAndStatusModel> _logger;
-        private readonly IEncloseAndCNStatusRepository _db;
+        private readonly ICnEncloseStatusRepository _db;
 
 
         [BindProperty]
-        public EncloseAndCNStatus EncloseAndCNStatus { get; set; }
+        public CnEncloseStatus EncloseAndCNStatus { get; set; }
 
-        public CainiaoStatusEvent CnStatusEvent = new CainiaoStatusEvent();
+        public CnStatusEvent CnStatusEvent = new CnStatusEvent();
 
-        public NewCNStatusEventModel(ILogger<EncloseAndStatusModel> logger, IEncloseAndCNStatusRepository db)
+        public NewCNStatusEventModel(ILogger<EncloseAndStatusModel> logger, ICnEncloseStatusRepository db)
         {
             _logger = logger;
             _db = db;
@@ -29,7 +29,7 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
 
             IdAndOwnerId idAndOwnerId = new IdAndOwnerId(id);
             EncloseAndCNStatus = _db.GetById(idAndOwnerId.Id, idAndOwnerId.OwnerId);
-            CnStatusEvent = new CainiaoStatusEvent();
+            CnStatusEvent = new CnStatusEvent();
 
             if (CnStatusEvent == null)
                 return RedirectToPage("/Error");

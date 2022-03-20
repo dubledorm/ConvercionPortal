@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ConvercionPortal.Services
 {
-    public class MongoEncloseAndCNStatusRepository : ScopedRepository<EncloseAndCNStatus>, IEncloseAndCNStatusRepository
+    public class MongoCnEncloseStatusRepository : ScopedRepository<CnEncloseStatus>, ICnEncloseStatusRepository
     {
         const string ConfigSectionName = "CainiaoStatusesDB";
         const string ConfigDBUrl = "DatabaseUrl";
@@ -23,10 +23,10 @@ namespace ConvercionPortal.Services
 
         private readonly MongoClient _client;
         private readonly IMongoDatabase _database;
-        private readonly IMongoCollection<EncloseAndCNStatus> _collection;
+        private readonly IMongoCollection<CnEncloseStatus> _collection;
 
 
-        public MongoEncloseAndCNStatusRepository(IConfiguration configuration, ILogger<MongoEncloseAndCNStatusRepository> logger) : base(logger)
+        public MongoCnEncloseStatusRepository(IConfiguration configuration, ILogger<MongoCnEncloseStatusRepository> logger) : base(logger)
         {
             _client = new MongoClient(
                 new MongoClientSettings()
@@ -44,30 +44,30 @@ namespace ConvercionPortal.Services
 
                 );
             _database = _client.GetDatabase(configuration.GetSection(ConfigSectionName)[ConfigDBName]);
-            _collection = _database.GetCollection<EncloseAndCNStatus>(EncloseAndStatusesCollectionName);
+            _collection = _database.GetCollection<CnEncloseStatus>(EncloseAndStatusesCollectionName);
             AddScope("SearchEncloseId", ScopeByEncloseId);
             AddScope("SearchEncloseOwnerId", ScopeByEncloseOwnerId);
         }
 
-        public EncloseAndCNStatus? Delete(int id, int ownerId)
+        public CnEncloseStatus? Delete(int id, int ownerId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<EncloseAndCNStatus> GetAll()
+        public IEnumerable<CnEncloseStatus> GetAll()
         {
-            var query = (from EncloseEvents in _collection.AsQueryable<EncloseAndCNStatus>() 
+            var query = (from EncloseEvents in _collection.AsQueryable<CnEncloseStatus>() 
                         select EncloseEvents);
-            query = (IMongoQueryable<EncloseAndCNStatus>)ExtendQueryByFilter(query);
+            query = (IMongoQueryable<CnEncloseStatus>)ExtendQueryByFilter(query);
 
             var result = from EncloseEvents in query select EncloseEvents;
             return result;
         }
 
-        public EncloseAndCNStatus? GetById(int id, int ownerId)
+        public CnEncloseStatus? GetById(int id, int ownerId)
         {
-            var _encloseAndCNStatuses = new List<EncloseAndCNStatus>();
-            var query = from EncloseEvents in _collection.AsQueryable<EncloseAndCNStatus>()
+            var _encloseAndCNStatuses = new List<CnEncloseStatus>();
+            var query = from EncloseEvents in _collection.AsQueryable<CnEncloseStatus>()
                         .Where(enclose => enclose.EncloseId.Equals(id))
                         .Where(enclose => enclose.EncloseOwnerId.Equals(ownerId))
                         select EncloseEvents;
@@ -78,12 +78,12 @@ namespace ConvercionPortal.Services
             return null;
         }
 
-        public EncloseAndCNStatus? Insert(EncloseAndCNStatus encloseAndCNStatus)
+        public CnEncloseStatus? Insert(CnEncloseStatus encloseAndCNStatus)
         {
             throw new NotImplementedException();
         }
 
-        public EncloseAndCNStatus? Update(EncloseAndCNStatus encloseAndCNStatus)
+        public CnEncloseStatus? Update(CnEncloseStatus encloseAndCNStatus)
         {
             throw new NotImplementedException();
         }
@@ -96,13 +96,13 @@ namespace ConvercionPortal.Services
             base.AddScopeRelation(ScopeName, PropertyGetter);
         }
     
-        public IQueryable<EncloseAndCNStatus> ScopeByEncloseId(IQueryable<EncloseAndCNStatus> query, string value)
+        public IQueryable<CnEncloseStatus> ScopeByEncloseId(IQueryable<CnEncloseStatus> query, string value)
         {
             query = query.Where(enclose => enclose.EncloseId.Equals(value));
             return query;
         }
 
-        public IQueryable<EncloseAndCNStatus> ScopeByEncloseOwnerId(IQueryable<EncloseAndCNStatus> query, string value)
+        public IQueryable<CnEncloseStatus> ScopeByEncloseOwnerId(IQueryable<CnEncloseStatus> query, string value)
         {
             query = query.Where(enclose => enclose.EncloseOwnerId.Equals(value));
             return query;

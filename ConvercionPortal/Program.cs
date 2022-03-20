@@ -36,7 +36,7 @@ try
     builder.Services.AddScoped<ICustomerRepository, SQLCustomerRepository>();
     builder.Services.AddSingleton<IConvercionTypeRepository, MockConvercionTypeRepository>();
     //builder.Services.AddSingleton<IEncloseAndCNStatusRepository, MockEncloseAndCNStatusRepository>();
-    builder.Services.AddScoped<IEncloseAndCNStatusRepository, MongoEncloseAndCNStatusRepository>();
+    builder.Services.AddScoped<ICnEncloseStatusRepository, MongoCnEncloseStatusRepository>();
 
 
     var app = builder.Build();

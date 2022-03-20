@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConvercionPortal.Models
 {
-    public class CainiaoStatusEvent
+    public class CnStatusEvent
     {
         public int PPStatus { get; set; }
 
@@ -16,7 +16,7 @@ namespace ConvercionPortal.Models
 
         public DateTime DateOfCreate { get; set; }
 
-        public int CainiaoStatusCode { get; set; }
+        public int CnStatusCode { get; set; }
 
     }
 }

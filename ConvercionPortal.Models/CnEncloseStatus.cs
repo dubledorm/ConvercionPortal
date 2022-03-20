@@ -2,7 +2,7 @@
 
 namespace ConvercionPortal.Models
 {
-    public class EncloseAndCNStatus
+    public class CnEncloseStatus
     {
         public ObjectId Id { get; set; }
         public int EncloseId { get; set; }
@@ -13,7 +13,7 @@ namespace ConvercionPortal.Models
 
         public bool FinishedFlag { get; set; }
 
-        public List<CainiaoStatusEvent> StatusHistory { get; set; }
+        public List<CnStatusEvent> StatusHistory { get; set; }
 
         public string StringId()
         {

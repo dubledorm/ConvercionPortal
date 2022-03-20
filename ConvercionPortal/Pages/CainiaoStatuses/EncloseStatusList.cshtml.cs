@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ConvercionPortal.Pages.CainiaoStatuses
 {
-    public class EncloseAndStatusListModel : PageModel
+    public class EncloseStatusListModel : PageModel
     {
-        private readonly ILogger<EncloseAndStatusListModel> _logger;
+        private readonly ILogger<EncloseStatusListModel> _logger;
 
-        private readonly IEncloseAndCNStatusRepository _db;
+        private readonly ICnEncloseStatusRepository _db;
 
-        public IEnumerable<EncloseAndCNStatus> EncloseAndCNStatuses { get; set; }
+        public IEnumerable<CnEncloseStatus> EncloseAndCNStatuses { get; set; }
                   
-        public EncloseAndStatusListModel(ILogger<EncloseAndStatusListModel> logger, IEncloseAndCNStatusRepository db)
+        public EncloseStatusListModel(ILogger<EncloseStatusListModel> logger, ICnEncloseStatusRepository db)
         {
             _logger = logger;
             _db = db;

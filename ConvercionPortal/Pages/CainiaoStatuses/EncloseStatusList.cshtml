@@ -1,9 +1,9 @@
 ﻿@page
 @using ConvercionPortal.Models
-@model ConvercionPortal.Pages.CainiaoStatuses.EncloseAndStatusListModel
+@model ConvercionPortal.Pages.CainiaoStatuses.EncloseStatusListModel
 
 
-<partial name="_EncloseAndStatusListHeaderPartial.cshtml" />
+<partial name="_EncloseStatusListHeaderPartial.cshtml" />
 
 <div class="tab-content" id="orders-table-tab-content">
     <div class="app-card app-card-orders-table shadow-sm mb-5">
@@ -21,14 +21,14 @@
 					</thead>
 
                     <tbody>
-                        @foreach(EncloseAndCNStatus encloseAndCNStatus in Model.EncloseAndCNStatuses)
+                        @foreach(CnEncloseStatus cnEncloseStatus in Model.EncloseAndCNStatuses)
                         {
                             <tr>
-								<td class="cell">@encloseAndCNStatus.EncloseId</td>
-                                <td class="cell">@encloseAndCNStatus.EncloseOwnerId</td>
-                                <td class="cell">@encloseAndCNStatus.TroubleFlag</td>
-								<td class="cell">@encloseAndCNStatus.FinishedFlag</td>
-								<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/EncloseAndStatus" asp-route-ID="@encloseAndCNStatus.StringId()">Открыть</a></td>
+								<td class="cell">@cnEncloseStatus.EncloseId</td>
+                                <td class="cell">@cnEncloseStatus.EncloseOwnerId</td>
+                                <td class="cell">@cnEncloseStatus.TroubleFlag</td>
+								<td class="cell">@cnEncloseStatus.FinishedFlag</td>
+								<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/EncloseStatus" asp-route-ID="@cnEncloseStatus.StringId()">Открыть</a></td>
 							</tr>
                         }
                     </tbody>
