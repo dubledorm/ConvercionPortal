@@ -36,7 +36,7 @@ try
     builder.Services.AddScoped<ICustomerRepository, SQLCustomerRepository>();
     builder.Services.AddSingleton<IConvercionTypeRepository, MockConvercionTypeRepository>();
     //builder.Services.AddSingleton<IEncloseAndCNStatusRepository, MockEncloseAndCNStatusRepository>();
-    builder.Services.AddSingleton<IEncloseAndCNStatusRepository, MongoEncloseAndCNStatusRepository>();
+    builder.Services.AddScoped<IEncloseAndCNStatusRepository, MongoEncloseAndCNStatusRepository>();
 
 
     var app = builder.Build();
@@ -63,8 +63,8 @@ try
 
 }
 catch (Exception exception) {
-  logger.Fatal($"ERROR Ошибка при запуске сервиса. Message - {exception.Message}. InnerException message = {exception.InnerException?.Message ?? "null"}");
-    return 1;
+  logger.Fatal($"ERROR Необработанная ошибка. Message - {exception.Message}. InnerException message = {exception.InnerException?.Message ?? "null"}");
+  return 1;
 }
 finally
 {

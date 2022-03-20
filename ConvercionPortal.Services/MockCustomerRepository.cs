@@ -1,4 +1,5 @@
 ﻿using ConvercionPortal.Models;
+using Microsoft.Extensions.Logging;
 
 namespace ConvercionPortal.Services
 {
@@ -6,7 +7,7 @@ namespace ConvercionPortal.Services
     {
         private List<Customer> _customers;
 
-        public MockCustomerRepository()
+        public MockCustomerRepository(ILogger<ScopedRepository<Customer>> logger): base(logger)
         {
             _customers = new List<Customer>()
              {

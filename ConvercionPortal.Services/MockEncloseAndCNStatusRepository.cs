@@ -1,28 +1,34 @@
 ﻿using ConvercionPortal.Models;
+using Microsoft.Extensions.Logging;
 
 namespace ConvercionPortal.Services
 {
-    public class MockEncloseAndCNStatusRepository: IEncloseAndCNStatusRepository
+    public class MockEncloseAndCNStatusRepository : ScopedRepository<EncloseAndCNStatus>,  IEncloseAndCNStatusRepository
     {
         private List<EncloseAndCNStatus> _encloseAndCNStatuses;
 
-        public MockEncloseAndCNStatusRepository()
+        public MockEncloseAndCNStatusRepository(ILogger<MongoEncloseAndCNStatusRepository> logger): base(logger)
         {
             _encloseAndCNStatuses = new List<EncloseAndCNStatus>()
              {
                 new EncloseAndCNStatus()
-                  { Id = 1, OwnerId = 1, TroubleFlag = false, FinishedFlag = true, 
-                    Statuses = new List<CainiaoStatusEvent>() { } 
+                  { EncloseId = 1, EncloseOwnerId = 1, TroubleFlag = false, FinishedFlag = true, 
+                    StatusHistory = new List<CainiaoStatusEvent>() { } 
                 },
                 new EncloseAndCNStatus()
-                  { Id = 2, OwnerId = 1, TroubleFlag = false, FinishedFlag = false,
-                    Statuses = new List<CainiaoStatusEvent>() { }
+                  { EncloseId = 2, EncloseOwnerId = 1, TroubleFlag = false, FinishedFlag = false,
+                    StatusHistory = new List<CainiaoStatusEvent>() { }
                 },
                 new EncloseAndCNStatus()
-                  { Id = 3, OwnerId = 1, TroubleFlag = true, FinishedFlag = false,
-                    Statuses = new List<CainiaoStatusEvent>() { }
+                  { EncloseId = 3, EncloseOwnerId = 1, TroubleFlag = true, FinishedFlag = false,
+                    StatusHistory = new List<CainiaoStatusEvent>() { }
                 }
             };
+        }
+
+        public void AddScopeRalation(string ScopeName, Func<string> PropertyGetter)
+        {
+            throw new NotImplementedException();
         }
 
         public EncloseAndCNStatus? Delete(int id, int ownerId)
@@ -37,7 +43,7 @@ namespace ConvercionPortal.Services
             return itemForDelete;
         }
 
-        public async Task<IEnumerable<EncloseAndCNStatus>> GetAll(Dictionary<string, string> filter)
+        public IEnumerable<EncloseAndCNStatus> GetAll()
         {
             //if (filter.Count == 0)
             //    return _encloseAndCNStatuses;
@@ -55,17 +61,17 @@ namespace ConvercionPortal.Services
         {
             return _encloseAndCNStatuses.FirstOrDefault(encloseAndCNStatus =>
             {
-                return encloseAndCNStatus.Id == id &&
-                encloseAndCNStatus.OwnerId == ownerId;
+                return encloseAndCNStatus.EncloseId == id &&
+                encloseAndCNStatus.EncloseOwnerId == ownerId;
             });
         }
 
         public EncloseAndCNStatus? Insert(EncloseAndCNStatus encloseAndCNStatus)
         {
-            int maxId = _encloseAndCNStatuses.Max<EncloseAndCNStatus>(itemEncloseAndCNStatus => itemEncloseAndCNStatus.Id);
+            int maxId = _encloseAndCNStatuses.Max<EncloseAndCNStatus>(itemEncloseAndCNStatus => itemEncloseAndCNStatus.EncloseId);
 
-            encloseAndCNStatus.Id = maxId + 1;
-            encloseAndCNStatus.OwnerId = 1;
+            encloseAndCNStatus.EncloseId = maxId + 1;
+            encloseAndCNStatus.EncloseOwnerId = 1;
             _encloseAndCNStatuses.Add(encloseAndCNStatus);
             return encloseAndCNStatus;
         }
@@ -74,8 +80,8 @@ namespace ConvercionPortal.Services
 
         public EncloseAndCNStatus? Update(EncloseAndCNStatus encloseAndCNStatus)
         {
-            EncloseAndCNStatus? encloseAndCNStatusForUpdate = GetById(encloseAndCNStatus.Id, 
-                encloseAndCNStatus.OwnerId);
+            EncloseAndCNStatus? encloseAndCNStatusForUpdate = GetById(encloseAndCNStatus.EncloseId, 
+                encloseAndCNStatus.EncloseOwnerId);
 
             if (encloseAndCNStatusForUpdate == null)
                 return null;

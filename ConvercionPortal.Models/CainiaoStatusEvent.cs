@@ -8,18 +8,15 @@ namespace ConvercionPortal.Models
 {
     public class CainiaoStatusEvent
     {
-        public int Id { get; set; }
-        public int OwnerId { get; set; }
-
         public int PPStatus { get; set; }
 
-        public CNStatusEnum CNStatus { get; set; }
+        public int PPStatusCode { get; set; }
 
-        public DateTime PPEventReceiveDateTime { get; set; }
+        public WarehouseTypeEvent PPWarehouseType { get; set; }
 
-        public DateTime CNStatusSendDateTime { get; set; }
+        public DateTime DateOfCreate { get; set; }
 
-        public int ProcessState { get; set; }
+        public int CainiaoStatusCode { get; set; }
 
     }
 }

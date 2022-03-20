@@ -1,4 +1,5 @@
 ﻿using ConvercionPortal.Models;
+using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace ConvercionPortal.Services
@@ -7,7 +8,7 @@ namespace ConvercionPortal.Services
     {
         private readonly AppDbContext _context;
 
-        public SQLCustomerRepository(AppDbContext context) : base()
+        public SQLCustomerRepository(AppDbContext context, ILogger<ScopedRepository<Customer>> logger) : base(logger)
         {
             _context = context;
             AddScope("Name", ScopeByName);

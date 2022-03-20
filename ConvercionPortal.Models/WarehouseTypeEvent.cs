@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConvercionPortal.Models
 {
-    public enum CNStatusEnum: int
-    {   START_ENUM = 101, 
-        END_ENUM = 102
+    public enum WarehouseTypeEvent: int
+    {       WhReception = 1,
+            WhDelivery = 2,
+            WhTransit = 3
     }
 }

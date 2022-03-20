@@ -7,40 +7,30 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
 {
     public class EncloseAndStatusListModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<EncloseAndStatusListModel> _logger;
 
         private readonly IEncloseAndCNStatusRepository _db;
 
         public IEnumerable<EncloseAndCNStatus> EncloseAndCNStatuses { get; set; }
                   
-        public EncloseAndStatusListModel(ILogger<IndexModel> logger, IEncloseAndCNStatusRepository db)
+        public EncloseAndStatusListModel(ILogger<EncloseAndStatusListModel> logger, IEncloseAndCNStatusRepository db)
         {
             _logger = logger;
             _db = db;
+            _db.AddScopeRalation("SearchEncloseId", () => SearchEncloseId);
+            _db.AddScopeRalation("SearchEncloseOwnerId", () => SearchEncloseOwnerId);
         }
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            _logger.LogInformation("А вот этот сообщение из EncloseAndStatusListModel");
+            _logger.LogDebug("OnGet");
             ViewData["ActivePage"] = "EncloseAndStatuses";
-            ViewData["search-id-text"] = Request.Query.FirstOrDefault(p => p.Key == "search-id").Value;
-            ViewData["search-owner-id-text"] = Request.Query.FirstOrDefault(p => p.Key == "search-owner-id").Value;
-            EncloseAndCNStatuses = await _db.GetAll(createFiltersDictionary(Request.Query));
+            EncloseAndCNStatuses = _db.GetAll();
         }
 
+        [BindProperty(SupportsGet = true)]
+        public string SearchEncloseId { get; set; }
 
-        private Dictionary<string, string> createFiltersDictionary(IQueryCollection Query)
-        {
-            Dictionary<string, string> translateAttributtes = new()
-            {
-                { "search-id", "Id" },
-                { "search-owner-id", "OwnerId" }
-            };
-
-            Dictionary<string, string> result = new Dictionary<string, string>();
-            foreach (var queryKey in Query.Keys)
-                if (translateAttributtes.ContainsKey(queryKey))
-                    result.Add(translateAttributtes[queryKey], Query[queryKey]);
-            return result;
-        }
+        [BindProperty(SupportsGet = true)]
+        public string SearchEncloseOwnerId { get; set; }
     }
 }

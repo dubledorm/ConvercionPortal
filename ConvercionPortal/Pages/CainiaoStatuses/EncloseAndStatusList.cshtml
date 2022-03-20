@@ -12,8 +12,8 @@
                 <table class="table app-table-hover mb-0 text-left">
                     <thead>
 						<tr>
-							<th class="cell">Id</th>
-                            <th class="cell">OwnerId</th>
+							<th class="cell">EncloseId</th>
+                            <th class="cell">EncloseOwnerId</th>
 							<th class="cell">TroubleFlag</th>
 							<th class="cell">FinishedFlag</th>
 							<th class="cell"></th>
@@ -24,11 +24,11 @@
                         @foreach(EncloseAndCNStatus encloseAndCNStatus in Model.EncloseAndCNStatuses)
                         {
                             <tr>
-								<td class="cell">@encloseAndCNStatus.Id</td>
-                                <td class="cell">@encloseAndCNStatus.OwnerId</td>
+								<td class="cell">@encloseAndCNStatus.EncloseId</td>
+                                <td class="cell">@encloseAndCNStatus.EncloseOwnerId</td>
                                 <td class="cell">@encloseAndCNStatus.TroubleFlag</td>
 								<td class="cell">@encloseAndCNStatus.FinishedFlag</td>
-								<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/EncloseAndStatus" asp-route-ID="@encloseAndCNStatus.Id-@encloseAndCNStatus.OwnerId">Открыть</a></td>
+								<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/EncloseAndStatus" asp-route-ID="@encloseAndCNStatus.StringId()">Открыть</a></td>
 							</tr>
                         }
                     </tbody>

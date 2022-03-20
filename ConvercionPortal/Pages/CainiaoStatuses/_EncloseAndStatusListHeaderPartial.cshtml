@@ -1,4 +1,5 @@
-﻿<div class="row g-3 mb-4 align-items-center justify-content-between">
+﻿@model ConvercionPortal.Pages.CainiaoStatuses.EncloseAndStatusListModel
+<div class="row g-3 mb-4 align-items-center justify-content-between">
 	<div class="col-auto">
 		<h1 class="app-page-title mb-0">Cainiao статусы</h1>
 	</div>
@@ -9,10 +10,10 @@
 				<div class="col-auto">
 					<form class="table-search-form row gx-1 align-items-center" method="get" asp-page="/CainiaoStatuses/EncloseAndStatusList">
 					    <div class="col-auto">
-					        <input type="text" id="search-id" name="search-id" class="form-control search-orders" placeholder="Искать по id" value="@ViewData["search-id-text"]">
+					        <input type="text"  asp-for="SearchEncloseId"  class="form-control search-orders" placeholder="Искать по id">
 					    </div>
 						<div class="col-auto">
-					        <input type="text" id="search-owner-id" name="search-owner-id" class="form-control search-orders" placeholder="Искать по owner_id" value="@ViewData["search-owner-id-text"]">
+					        <input type="text"  asp-for="SearchEncloseOwnerId"   class="form-control search-orders" placeholder="Искать по owner_id">
 					    </div>
 					    <div class="col-auto">
 					        <button type="submit" class="btn app-btn-secondary">Искать</button>

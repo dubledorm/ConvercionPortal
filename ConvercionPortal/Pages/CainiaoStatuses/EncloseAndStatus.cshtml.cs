@@ -7,16 +7,21 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
 {
     public class EncloseAndStatusModel : PageModel
     {
+        private readonly ILogger<EncloseAndStatusModel> _logger;
         private readonly IEncloseAndCNStatusRepository _db;
+        [BindProperty]
         public EncloseAndCNStatus? encloseAndCNStatus { get; set; }
 
-        public EncloseAndStatusModel(IEncloseAndCNStatusRepository db)
+        public EncloseAndStatusModel(ILogger<EncloseAndStatusModel> logger, IEncloseAndCNStatusRepository db)
         {
+            _logger = logger;
             _db = db;
         }
 
-        public void OnGet(string separatedIdAndOwnerId)
-        {   IdAndOwnerId idAndOwnerId = new IdAndOwnerId(separatedIdAndOwnerId);
+        public void OnGet(string id)
+        {
+            _logger.LogDebug($"id: {id}");
+            IdAndOwnerId idAndOwnerId = new IdAndOwnerId(id);
 
             ViewData["ActivePage"] = "EncloseAndStatuses";
             encloseAndCNStatus = _db.GetById(idAndOwnerId.Id, idAndOwnerId.OwnerId);

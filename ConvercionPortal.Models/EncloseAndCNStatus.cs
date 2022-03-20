@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MongoDB.Bson;
 
 namespace ConvercionPortal.Models
 {
     public class EncloseAndCNStatus
     {
-        public int Id { get; set; }
+        public ObjectId Id { get; set; }
+        public int EncloseId { get; set; }
 
-        public int OwnerId { get; set; }
+        public int EncloseOwnerId { get; set; }
 
         public bool TroubleFlag { get; set; }
 
         public bool FinishedFlag { get; set; }
 
-        public List<CainiaoStatusEvent> Statuses { get; set; }
+        public List<CainiaoStatusEvent> StatusHistory { get; set; }
+
+        public string StringId()
+        {
+            return $"{EncloseId}-{EncloseOwnerId}";
+        }
     }
 }

@@ -17,14 +17,12 @@ namespace ConvercionPortal.Models
         }
 
         public IdAndOwnerId(string idAndOwnerId)
-        {
-            Id = 1;  // (int)idAndOwnerId.Split(Separator)[0];
-            OwnerId = 1;
+        {   string[] arr = idAndOwnerId.Split(new char[] { Separator });
+            Id = int.Parse(arr[0]);
+            OwnerId = int.Parse(arr[1]);
         }
 
-        public int Id { get; set; }
-        public int OwnerId { get; set; }
-
-
+        public int Id { get; }
+        public int OwnerId { get; }
     }
 }
