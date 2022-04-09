@@ -8,7 +8,7 @@ namespace ConvercionPortal.Services
     {
         private readonly AppDbContext _context;
 
-        public SQLCustomerRepository(AppDbContext context, ILogger<ScopedRepository<Customer>> logger) : base(logger)
+        public SQLCustomerRepository(AppDbContext context, ILogger<ScopedRepository<Customer>> logger) : base()
         {
             _context = context;
             AddScope("Name", ScopeByName);

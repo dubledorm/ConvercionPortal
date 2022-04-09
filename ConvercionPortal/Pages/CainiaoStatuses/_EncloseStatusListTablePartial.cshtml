@@ -1,0 +1,29 @@
+﻿@using Data.Models.Cainiao
+@model ConvercionPortal.Pages.CainiaoStatuses.EncloseStatusListModel
+
+<div class="table-responsive">
+    <table class="table app-table-hover mb-0 text-left">
+        <thead>
+			<tr>
+				<th class="cell">EncloseId</th>
+                <th class="cell">EncloseOwnerId</th>
+				<th class="cell">TroubleFlag</th>
+				<th class="cell">FinishedFlag</th>
+				<th class="cell"></th>
+			</tr>
+		</thead>
+
+        <tbody>
+            @foreach(EncloseEvent encloseEvent in Model.EncloseEvents)
+            {
+                <tr>
+					<td class="cell">@encloseEvent.EncloseId</td>
+                    <td class="cell">@encloseEvent.EncloseOwnerId</td>
+                    <td class="cell">@encloseEvent.TroubleFlag</td>
+					<td class="cell">@encloseEvent.IsFinished</td>
+					<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/EncloseStatus" asp-route-EncloseId="@encloseEvent.EncloseId"  asp-route-EncloseOwnerId="@encloseEvent.EncloseOwnerId">Открыть</a></td>
+				</tr>
+            }
+        </tbody>
+    </table>
+</div>

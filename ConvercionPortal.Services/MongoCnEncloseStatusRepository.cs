@@ -26,7 +26,7 @@ namespace ConvercionPortal.Services
         private readonly IMongoCollection<CnEncloseStatus> _collection;
 
 
-        public MongoCnEncloseStatusRepository(IConfiguration configuration, ILogger<MongoCnEncloseStatusRepository> logger) : base(logger)
+        public MongoCnEncloseStatusRepository(IConfiguration configuration, ILogger<MongoCnEncloseStatusRepository> logger) : base()
         {
             _client = new MongoClient(
                 new MongoClientSettings()
@@ -37,7 +37,7 @@ namespace ConvercionPortal.Services
                     {
                         cb.Subscribe<CommandStartedEvent>(e =>
                         {
-                            _logger.LogDebug($"{e.CommandName} - {e.Command.ToJson()}");
+                           // _logger.LogDebug($"{e.CommandName} - {e.Command.ToJson()}");
                         });
                     }
                 }

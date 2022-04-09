@@ -7,7 +7,7 @@ namespace ConvercionPortal.Services
     {
         private List<Customer> _customers;
 
-        public MockCustomerRepository(ILogger<ScopedRepository<Customer>> logger): base(logger)
+        public MockCustomerRepository(ILogger<ScopedRepository<Customer>> logger): base()
         {
             _customers = new List<Customer>()
              {

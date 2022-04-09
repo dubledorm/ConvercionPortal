@@ -11,11 +11,9 @@ namespace ConvercionPortal.Services
     {
         // Словарь для связки свойств модели(view) с именами scope 
         private Dictionary<string, Func<string>> PropScopeRelations { get; set; }
-        protected ILogger _logger;
 
-        public ScopedRepository(ILogger<ScopedRepository<TModel>> logger) : base()
+        public ScopedRepository() : base()
         {
-            _logger = logger;
             PropScopeRelations = new Dictionary<string,Func<string>>();
         }
 
@@ -46,7 +44,7 @@ namespace ConvercionPortal.Services
         {
             foreach (var item in PropScopeRelations)
             {
-                _logger.LogDebug($"{item.Key} = {item.Value()}");
+                //_logger.LogDebug($"{item.Key} = {item.Value()}");
                 if (!string.IsNullOrWhiteSpace(item.Value()))
                 {
                     Object fnc;

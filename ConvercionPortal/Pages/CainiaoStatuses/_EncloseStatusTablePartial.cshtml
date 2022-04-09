@@ -1,0 +1,37 @@
+﻿@using Data.Models.Cainiao
+@model ConvercionPortal.Pages.CainiaoStatuses.EncloseStatusModel
+@{int historyRecordOrder = 0;
+}
+
+<div class="table-responsive">
+	<table class="table app-table-hover mb-0 text-left">
+		<thead>
+			<tr>
+				<th class="cell">Статус ПП</th>
+				<th class="cell">Время создания</th>
+				<th class="cell">Статус Cainiao</th>
+				<th class="cell">Отправлено в CN</th>
+				<th class="cell">OpCode</th>
+				<th class="cell">Завершающий</th>
+				<th class="cell"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@foreach(EncloseStatusHistoryRecord historyRecord in Model.encloseEvent.StatusHistory)
+			{
+				<tr>
+					<td class="cell">@historyRecord.VisualState</td>
+					<td class="cell">@historyRecord.OperationDate</td>
+					<td class="cell">@historyRecord.CainiaoCallback</td>
+					<td class="cell">@historyRecord.IsCainiaoCallbackSended</td>
+					<td class="cell">@historyRecord.OpCode</td>
+					<td class="cell">@historyRecord.IsFinalStatus</td>
+					<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/NewStatusEvent"  asp-route-EncloseId="@Model.encloseEvent.EncloseId" asp-route-EncloseOwnerId="@Model.encloseEvent.EncloseOwnerId"  asp-route-statusHistoryOrder="@historyRecordOrder">Редактировать</a></td>
+				</tr>
+
+					historyRecordOrder++;
+				}
+		</tbody>
+	</table>
+</div>

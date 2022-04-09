@@ -7,7 +7,7 @@ namespace ConvercionPortal.Services
     {
         private List<CnEncloseStatus> _encloseAndCNStatuses;
 
-        public MockCnEncloseStatusRepository(ILogger<MongoCnEncloseStatusRepository> logger): base(logger)
+        public MockCnEncloseStatusRepository(ILogger<MongoCnEncloseStatusRepository> logger): base()
         {
             _encloseAndCNStatuses = new List<CnEncloseStatus>()
              {

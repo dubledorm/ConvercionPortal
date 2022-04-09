@@ -1,0 +1,37 @@
+﻿@model ConvercionPortal.Pages.CainiaoStatuses.EncloseStatusModel
+
+<div class="row g-3 mb-4 align-items-center justify-content-between">
+	<div class="col-auto">
+		<h1 class="app-page-title mb-0">История статусов</h1>
+	</div>
+
+	<div class="col-auto">
+			<div class="page-utilities">
+			<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+				<div class="col-auto">
+					<a class="btn app-btn-primary" asp-page="/CainiaoStatuses/EncloseStatusList">Вернуться к списку</a>
+				</div><!--//col-->
+				<div class="col-auto">
+					<a class="btn app-btn-secondary" asp-page="/CainiaoStatuses/NewStatusEvent" 
+					asp-route-EncloseId="@Model.encloseEvent.EncloseId"
+					asp-route-EncloseOwnerId="@Model.encloseEvent.EncloseOwnerId">Добавить событие</a>
+				</div><!--//col-->
+
+			</div><!--//row-->
+		</div><!--//table-utilities-->
+	</div><!--//col-auto-->
+</div><!--//row-->
+<div class="app-card shadow-sm mb-4 border-left-decoration">
+	<div class="inner">
+		<div class="app-card-body p-4">
+			<div class="row gx-5 gy-3 justify-content-around align-items-center">
+					<div class="col-auto"><strong>EncloseId:</strong> @Model.encloseEvent.EncloseId</div>
+					<div class="col-auto"><strong>EncloseOwnerId:</strong> @Model.encloseEvent.EncloseOwnerId</div>
+					<div class="col-auto"><strong>Флаг проблемы:</strong> @Model.encloseEvent.TroubleFlag</div>
+					<div class="col-auto"><strong>Завершена:</strong> @Model.encloseEvent.IsFinished</div>
+			</div><!--//row-->
+	
+		</div><!--//app-card-body-->
+	</div><!--//inner-->
+</div>
+

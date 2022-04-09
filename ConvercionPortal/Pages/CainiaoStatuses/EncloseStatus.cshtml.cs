@@ -1,30 +1,35 @@
 using ConvercionPortal.Models;
-using ConvercionPortal.Services;
+using Data.Models.Cainiao;
+using Data.Stores.Cainiao;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ConvercionPortal.Pages.CainiaoStatuses
 {
-    public class EncloseAndStatusModel : PageModel
+    public class EncloseStatusModel : PageModel
     {
-        private readonly ILogger<EncloseAndStatusModel> _logger;
-        private readonly ICnEncloseStatusRepository _db;
+        private readonly ILogger<EncloseStatusModel> _logger;
+        private readonly IEncloseEventsStore _db;
         [BindProperty]
-        public CnEncloseStatus? encloseAndCNStatus { get; set; }
+        public EncloseEvent? encloseEvent { get; set; }
 
-        public EncloseAndStatusModel(ILogger<EncloseAndStatusModel> logger, ICnEncloseStatusRepository db)
+        public EncloseStatusModel(ILogger<EncloseStatusModel> logger, IEncloseEventsStore db)
         {
             _logger = logger;
             _db = db;
         }
 
-        public void OnGet(string id)
+        public async Task<IActionResult> OnGetAsync(int EncloseId, int EncloseOwnerId)
         {
-            _logger.LogDebug($"id: {id}");
-            IdAndOwnerId idAndOwnerId = new IdAndOwnerId(id);
+            _logger.LogDebug($"EncloseId: {EncloseId}, EncloseOwnerId: {EncloseOwnerId}");
 
             ViewData["ActivePage"] = "EncloseAndStatuses";
-            encloseAndCNStatus = _db.GetById(idAndOwnerId.Id, idAndOwnerId.OwnerId);
+            encloseEvent = await _db.GetAsync(EncloseId, EncloseOwnerId);
+
+            if (encloseEvent == null)
+                return NotFound($"Не существует записи с EncloseId = {EncloseId} и EncloseOwnerId = {EncloseOwnerId}");
+
+            return Page();
         }
     }
 }

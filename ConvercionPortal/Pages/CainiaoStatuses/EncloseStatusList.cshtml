@@ -1,5 +1,6 @@
 ﻿@page
 @using ConvercionPortal.Models
+@using Data.Models.Cainiao
 @model ConvercionPortal.Pages.CainiaoStatuses.EncloseStatusListModel
 
 
@@ -8,32 +9,24 @@
 <div class="tab-content" id="orders-table-tab-content">
     <div class="app-card app-card-orders-table shadow-sm mb-5">
 		<div class="app-card-body">
-			<div class="table-responsive">
-                <table class="table app-table-hover mb-0 text-left">
-                    <thead>
-						<tr>
-							<th class="cell">EncloseId</th>
-                            <th class="cell">EncloseOwnerId</th>
-							<th class="cell">TroubleFlag</th>
-							<th class="cell">FinishedFlag</th>
-							<th class="cell"></th>
-						</tr>
-					</thead>
-
-                    <tbody>
-                        @foreach(CnEncloseStatus cnEncloseStatus in Model.EncloseAndCNStatuses)
-                        {
-                            <tr>
-								<td class="cell">@cnEncloseStatus.EncloseId</td>
-                                <td class="cell">@cnEncloseStatus.EncloseOwnerId</td>
-                                <td class="cell">@cnEncloseStatus.TroubleFlag</td>
-								<td class="cell">@cnEncloseStatus.FinishedFlag</td>
-								<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/EncloseStatus" asp-route-ID="@cnEncloseStatus.StringId()">Открыть</a></td>
-							</tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+			<partial name="_EncloseStatusListTablePartial.cshtml" model="Model" />
         </div>
     </div>
 </div>
+
+<div class="row g-5 settings-section">
+	<nav class="app-pagination">
+		<ul class="pagination justify-content-center">
+			<li class="page-item disabled">
+				<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+			</li>
+			<li class="page-item active"><a class="page-link" href="#">1</a></li>
+			<li class="page-item"><a class="page-link" href="#">2</a></li>
+			<li class="page-item"><a class="page-link" href="#">3</a></li>
+			<li class="page-item">
+				<a class="page-link" href="#">Next</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+

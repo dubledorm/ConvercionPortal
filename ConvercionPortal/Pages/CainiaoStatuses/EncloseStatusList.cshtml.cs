@@ -1,5 +1,5 @@
-using ConvercionPortal.Models;
-using ConvercionPortal.Services;
+using Data.Models.Cainiao;
+using Data.Stores.Cainiao;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,24 +7,25 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
 {
     public class EncloseStatusListModel : PageModel
     {
+        const int PageSize = 3;
+
         private readonly ILogger<EncloseStatusListModel> _logger;
+        private readonly IEncloseEventsStore _db;
 
-        private readonly ICnEncloseStatusRepository _db;
-
-        public IEnumerable<CnEncloseStatus> EncloseAndCNStatuses { get; set; }
+        public List<EncloseEvent> EncloseEvents { get; set; }
                   
-        public EncloseStatusListModel(ILogger<EncloseStatusListModel> logger, ICnEncloseStatusRepository db)
+        public EncloseStatusListModel(ILogger<EncloseStatusListModel> logger, IEncloseEventsStore db)
         {
             _logger = logger;
             _db = db;
-            _db.AddScopeRalation("SearchEncloseId", () => SearchEncloseId);
-            _db.AddScopeRalation("SearchEncloseOwnerId", () => SearchEncloseOwnerId);
+            _db.AddScopeRelation("SearchEncloseId", () => SearchEncloseId);
+            _db.AddScopeRelation("SearchEncloseOwnerId", () => SearchEncloseOwnerId);
         }
-        public void OnGet()
+        public async Task OnGetAsync()
         {
             _logger.LogDebug("OnGet");
             ViewData["ActivePage"] = "EncloseAndStatuses";
-            EncloseAndCNStatuses = _db.GetAll();
+            EncloseEvents = await _db.GetAsync();
         }
 
         [BindProperty(SupportsGet = true)]
