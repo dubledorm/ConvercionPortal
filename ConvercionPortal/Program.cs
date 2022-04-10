@@ -36,12 +36,7 @@ try
 
     // Add services to the container.
 
-    builder.Services.AddDbContextPool<AppDbContext>(options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("CustomerDBConnection"));
-    });
     builder.Services.AddRazorPages();
-    builder.Services.AddScoped<ICustomerRepository, SQLCustomerRepository>();
     
     builder.Services.AddSingleton<IMongoClient, MongoClient>(sp => new MongoClient(
                 new MongoClientSettings()

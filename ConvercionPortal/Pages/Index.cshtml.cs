@@ -7,12 +7,11 @@ namespace ConvercionPortal.Pages
     {
         private readonly ILogger<IndexModel> _logger;
 
-        private readonly ICustomerRepository _db;
+        
 
-        public IndexModel(ILogger<IndexModel> logger, ICustomerRepository db)
+        public IndexModel(ILogger<IndexModel> logger)
         {
-            _logger = logger;
-            _db = db;
+            _logger = logger;           
         }
 
         public void OnGet()
