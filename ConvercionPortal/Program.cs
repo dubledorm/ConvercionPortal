@@ -42,9 +42,6 @@ try
     });
     builder.Services.AddRazorPages();
     builder.Services.AddScoped<ICustomerRepository, SQLCustomerRepository>();
-    builder.Services.AddSingleton<IConvercionTypeRepository, MockConvercionTypeRepository>();
-    //builder.Services.AddSingleton<IEncloseAndCNStatusRepository, MockEncloseAndCNStatusRepository>();
-    //builder.Services.AddScoped<ICnEncloseStatusRepository, MongoCnEncloseStatusRepository>();
     
     builder.Services.AddSingleton<IMongoClient, MongoClient>(sp => new MongoClient(
                 new MongoClientSettings()
