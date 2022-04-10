@@ -8,7 +8,7 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
 {
     public class EncloseStatusListModel : PageModel
     {
-        const int PageSize = 3;
+        const int PageSize = 20;
         private static Dictionary<int, string> TroubleFlagValues = new Dictionary<int, string>() {
             {1, "Проблемы" },
             {2, "Без проблем" }
@@ -33,6 +33,7 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
         {
             _logger = logger;
             _db = db;
+            PageNumber = 0;
             TroubleFlagOptions = new SelectList(TroubleFlagValues, "Key", "Value");
             FinishedFlagOptions = new SelectList(FinishedFlagValues, "Key", "Value");
             _db.AddScopeRelation("SearchEncloseId", () => SearchEncloseId);
@@ -45,10 +46,8 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
             _logger.LogDebug("OnGet");
             ViewData["ActivePage"] = "EncloseAndStatuses";
 
-
-            PageCount = await _db.CountAsync();
-            EncloseEvents = await _db.GetAsync();
-            
+            PageCount = await _db.CountAsync() / PageSize + 1;
+            EncloseEvents = await _db.GetAsync(PageNumber * PageSize, PageSize);           
         }
 
         [BindProperty(SupportsGet = true)]
@@ -62,5 +61,8 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
 
         [BindProperty(SupportsGet = true)]
         public string SearchFinishedFlag { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int PageNumber { get; set; }
     }
 }

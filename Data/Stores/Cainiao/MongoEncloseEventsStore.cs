@@ -38,11 +38,11 @@ namespace Data.Stores.Cainiao
             throw new NotImplementedException();
         }
 
-        public async Task<List<EncloseEvent>> GetAsync(int skip = 0)
+        public async Task<List<EncloseEvent>> GetAsync(int skip = 0, int limit = 0)
         {
             Filter = new BsonDocument();
             ExtendFilter();
-            return await _encloseEvents.Find(Filter).ToListAsync();
+            return await _encloseEvents.Find(Filter).Skip(skip).Limit(limit).ToListAsync();
         }
 
         public async Task<long> CountAsync()

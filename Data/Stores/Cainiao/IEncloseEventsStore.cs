@@ -7,7 +7,7 @@ namespace Data.Stores.Cainiao
     {
         Task<EncloseEvent> CreateAsync(EncloseEvent encloseEvent);
         Task<EncloseEvent?> GetByIdAsync(int encloseId, int encloseOwnerID);
-        Task<List<EncloseEvent>> GetAsync(int skip = 0);
+        Task<List<EncloseEvent>> GetAsync(int skip = 0, int limit = 0);
         Task<long> CountAsync();
         Task UpdateAsync(EncloseEvent encloseEvent);
         Task<EncloseEvent> Delete(int encloseId, int encloseOwnerID);
