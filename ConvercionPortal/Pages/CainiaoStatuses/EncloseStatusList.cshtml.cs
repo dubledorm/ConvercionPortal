@@ -8,7 +8,7 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
 {
     public class EncloseStatusListModel : PageModel
     {
-        const int PageSize = 3;
+        const int PageSize = 20;
         private static Dictionary<int, string> TroubleFlagValues = new Dictionary<int, string>() {
             {1, "Проблемы" },
             {2, "Без проблем" }
