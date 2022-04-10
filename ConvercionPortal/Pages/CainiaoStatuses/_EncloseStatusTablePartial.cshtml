@@ -7,6 +7,7 @@
 	<table class="table app-table-hover mb-0 text-left">
 		<thead>
 			<tr>
+				<th class="cell">№№</th>
 				<th class="cell">Статус ПП</th>
 				<th class="cell">Время создания</th>
 				<th class="cell">Статус Cainiao</th>
@@ -21,13 +22,28 @@
 			@foreach(EncloseStatusHistoryRecord historyRecord in Model.encloseEvent.StatusHistory)
 			{
 				<tr>
+					<td class="cell">@(historyRecordOrder + 1)</td>
 					<td class="cell">@historyRecord.VisualState</td>
 					<td class="cell">@historyRecord.OperationDate</td>
 					<td class="cell">@historyRecord.CainiaoCallback</td>
 					<td class="cell">@historyRecord.IsCainiaoCallbackSended</td>
 					<td class="cell">@historyRecord.OpCode</td>
 					<td class="cell">@historyRecord.IsFinalStatus</td>
-					<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/NewStatusEvent"  asp-route-EncloseId="@Model.encloseEvent.EncloseId" asp-route-EncloseOwnerId="@Model.encloseEvent.EncloseOwnerId"  asp-route-statusHistoryOrder="@historyRecordOrder">Редактировать</a></td>
+					<td class="cell">
+						<form method="post">
+							<a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/NewStatusEvent"  
+							asp-route-EncloseId="@Model.encloseEvent.EncloseId" 
+							asp-route-EncloseOwnerId="@Model.encloseEvent.EncloseOwnerId"  
+							asp-route-statusHistoryOrder="@historyRecordOrder">Редактировать</a>
+							
+							<button type="submit" class="btn-sm app-btn-secondary" asp-page-handler="deleteEvent" asp-route-EncloseId="@Model.encloseEvent.EncloseId"
+							onclick="return confirm('Действительно удалить?')"
+							asp-route-EncloseOwnerId="@Model.encloseEvent.EncloseOwnerId"  
+							asp-route-statusHistoryOrder="@historyRecordOrder">
+								Удалить
+							</button>
+						</form>
+					</td>
 				</tr>
 
 					historyRecordOrder++;

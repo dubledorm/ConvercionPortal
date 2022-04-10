@@ -19,7 +19,14 @@
                 <tr>
 					<td class="cell">@encloseEvent.EncloseId</td>
                     <td class="cell">@encloseEvent.EncloseOwnerId</td>
-                    <td class="cell">@encloseEvent.TroubleFlag</td>
+                    @if (@encloseEvent.TroubleFlag) {
+                        <td class="cell"><span class="badge bg-danger">Проблемный</span></td>
+                    }
+                    else
+                    {
+                        <td class="cell"><span class="badge bg-success">Ok</span></td>
+                    }
+
 					<td class="cell">@encloseEvent.IsFinished</td>
 					<td class="cell"><a class="btn-sm app-btn-secondary" asp-page="/CainiaoStatuses/EncloseStatus" asp-route-EncloseId="@encloseEvent.EncloseId"  asp-route-EncloseOwnerId="@encloseEvent.EncloseOwnerId">Открыть</a></td>
 				</tr>

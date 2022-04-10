@@ -31,6 +31,9 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
         [BindProperty]
         public int? statusHistoryOrder { get; set; }
 
+        [BindProperty]
+        public int newStatusHistoryOrder { get; set; }
+
         public NewStatusEventModel(ILogger<NewStatusEventModel> logger, IEncloseEventsStore db)
         {
             _logger = logger;
@@ -52,10 +55,13 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
             {
                 ViewData["Title"] = "Изменить событие";
                 historyRecord = encloseEvent.StatusHistory[statusHistoryOrder.Value];
-                this.statusHistoryOrder = statusHistoryOrder.Value;
+                this.newStatusHistoryOrder = statusHistoryOrder.Value + 1;
             }
             else
+            {
+                this.newStatusHistoryOrder = encloseEvent.StatusHistory.Count + 1;
                 historyRecord = new EncloseStatusHistoryRecord();
+            }    
 
             return Page();
         }
@@ -70,13 +76,35 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
             if (!ModelState.IsValid)
                 return Page();
 
-            if (statusHistoryOrder.HasValue)
+            if (newStatusHistoryOrder < 1)
             {
-                encloseEvent.StatusHistory[statusHistoryOrder.Value] = historyRecord;
+                ModelState.AddModelError("newStatusHistoryOrder", "Значение должно быть больше 0");
+                return Page();
+            }
 
+            if (statusHistoryOrder.HasValue)
+            {   // Редактирование
+                if (newStatusHistoryOrder > encloseEvent.StatusHistory.Count)
+                {
+                    ModelState.AddModelError("newStatusHistoryOrder", $"Значение должно быть не больше {encloseEvent.StatusHistory.Count}");
+                    return Page();
+                }
+
+                if (statusHistoryOrder.Value != newStatusHistoryOrder - 1)
+                {
+                    encloseEvent.StatusHistory.RemoveAt(statusHistoryOrder.Value);
+                    encloseEvent.StatusHistory.Insert(newStatusHistoryOrder - 1, historyRecord);
+                }
+                else
+                  encloseEvent.StatusHistory[statusHistoryOrder.Value] = historyRecord;
             } else
-            {
-                encloseEvent.StatusHistory.Add(historyRecord);
+            {   // Новая запись
+                if (newStatusHistoryOrder > encloseEvent.StatusHistory.Count + 1)
+                {
+                    ModelState.AddModelError("newStatusHistoryOrder", $"Значение должно быть не больше {encloseEvent.StatusHistory.Count + 1}");
+                    return Page();
+                }
+                encloseEvent.StatusHistory.Insert(newStatusHistoryOrder - 1, historyRecord);
             }
 
                 
@@ -84,23 +112,6 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
                 return RedirectToPage("/CainiaoStatuses/EncloseStatus", new { Encloseid = encloseId, EncloseOwnerId = encloseOwnerId });
 
             return RedirectToPage("/CainiaoStatuses/EncloseStatus", new { Encloseid = encloseId, EncloseOwnerId = encloseOwnerId });
-
-       /*     if (ConvercionType.Id > 0)
-            {
-                if (_db.Update(ConvercionType) == null)
-                    return RedirectToPage("/CainiaoStatuses/EncloseStatus", new { Encloseid = encloseId, EncloseOwnerId = encloseOwnerId });
-            }
-            else
-            {
-                ConvercionType? convercionType = _db.Insert(ConvercionType);
-                if (convercionType == null)
-                    return RedirectToPage("/Error");
-
-                ConvercionType = convercionType;
-            }
-
-            return RedirectToPage("/ConvercionTypes/ConvercionType", new { id = ConvercionType.Id });
-       */
         }
 
     }
