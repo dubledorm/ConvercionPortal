@@ -14,6 +14,19 @@
 					    </div>
 						<div class="col-auto">
 					        <input type="text"  asp-for="SearchEncloseOwnerId"   class="form-control search-orders" placeholder="Искать по owner_id">
+
+					    </div>
+						<div class="col-auto">			        
+							<select class="form-control" asp-for="SearchTroubleFlag" asp-items="@Model.TroubleFlagOptions">
+							   <option value="" default="">TroubleFlag</option>
+					    	</select>
+							<span asp-validation-for="@Model.TroubleFlagOptions" class="text-danger"></span>
+					    </div>
+						<div class="col-auto">			        
+							<select class="form-control" asp-for="SearchFinishedFlag" asp-items="@Model.FinishedFlagOptions">
+							   <option value="" default="">FinishedFlag</option>
+					    	</select>
+							<span asp-validation-for="@Model.FinishedFlagOptions" class="text-danger"></span>
 					    </div>
 					    <div class="col-auto">
 					        <button type="submit" class="btn app-btn-secondary">Искать</button>

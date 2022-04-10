@@ -14,6 +14,7 @@ namespace Data.Stores.Cainiao
 
         private readonly ILogger<MongoEncloseEventsStore> _logger;
         private readonly IMongoCollection<EncloseEvent> _encloseEvents;
+        private FilterDefinition<EncloseEvent> Filter;
 
         public MongoEncloseEventsStore(IMongoDatabase mongoDB,
             ILogger<MongoEncloseEventsStore> logger)
@@ -22,7 +23,9 @@ namespace Data.Stores.Cainiao
             _logger = logger;
             AddScope("SearchEncloseId", ScopeByEncloseId);
             AddScope("SearchEncloseOwnerId", ScopeByEncloseOwnerId);
-         }
+            AddScope("SearchTroubleFlag", ScopeByTroubleFlag);
+            AddScope("SearchFinishedFlag", ScopeByFinishedFlag);
+        }
 
 
         public async Task<EncloseEvent> CreateAsync(EncloseEvent encloseEvent)
@@ -35,14 +38,18 @@ namespace Data.Stores.Cainiao
             throw new NotImplementedException();
         }
 
-        public async Task<List<EncloseEvent>> GetAsync()
+        public async Task<List<EncloseEvent>> GetAsync(int skip = 0)
         {
-            var query = (from EncloseEvents in _encloseEvents.AsQueryable<EncloseEvent>()
-                         select EncloseEvents);
-            query = (IMongoQueryable<EncloseEvent>)ExtendQueryByFilter(query);
+            Filter = new BsonDocument();
+            ExtendFilter();
+            return await _encloseEvents.Find(Filter).ToListAsync();
+        }
 
-            var result = from EncloseEvents in query select EncloseEvents;
-            return await result.ToListAsync();
+        public async Task<long> CountAsync()
+        {
+            Filter = new BsonDocument();
+            ExtendFilter();
+            return _encloseEvents.CountDocuments(Filter);
         }
 
         public async Task<EncloseEvent ?> GetAsync(int encloseId, int encloseOwnerID)
@@ -66,16 +73,44 @@ namespace Data.Stores.Cainiao
             base.AddScopeRelation(ScopeName, PropertyGetter);
         }
 
-        public IQueryable<EncloseEvent> ScopeByEncloseId(IQueryable<EncloseEvent> query, string value)
+        public bool ScopeByEncloseId(string value)
         {
-            query = query.Where(enclose => enclose.EncloseId.Equals(value));
-            return query;
+            try
+            {
+                Filter &= new BsonDocument("enclose_id", Int64.Parse(value));
+                return true;
+            } catch
+            {
+                return false;
+            }
+            
         }
 
-        public IQueryable<EncloseEvent> ScopeByEncloseOwnerId(IQueryable<EncloseEvent> query, string value)
+        public bool ScopeByEncloseOwnerId(string value)
         {
-            query = query.Where(enclose => enclose.EncloseOwnerId.Equals(value));
-            return query;
+            try
+            {
+                Filter &= new BsonDocument("enclose_owner_id", Int64.Parse(value));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool ScopeByTroubleFlag(string value)
+        {
+            bool boolValue = value == "1" ? true : false;
+            Filter &= new BsonDocument("trouble_flag", boolValue);
+            return true;
+        }
+
+        public bool ScopeByFinishedFlag(string value)
+        {
+            bool boolValue = value == "1" ? false : true;
+            Filter &= new BsonDocument("finished", boolValue);
+            return true;
         }
     }
 }

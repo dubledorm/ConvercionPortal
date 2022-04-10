@@ -55,5 +55,39 @@ namespace ConvercionPortal.Services
             }
             return query;
         }
+
+
+        // Тоже самое но без IQueryable
+        protected delegate bool SimpleScopeFunction(string value);
+        protected ScopedRepository<TModel> AddScope(string ScopeName, SimpleScopeFunction Func)
+        {
+            this.Add(ScopeName, Func);
+            return this;
+        }
+
+        // Добавить фильтры в переданный запрос.
+        // Фильтр добавляется если заполнено свойство модели, переденнное в словарь PropScopeRelations через PropertyGetter
+        // Если свойство имеет значение, то в словаре PropScopeRelations берётся ключ для него и по этому же ключу ищется 
+        // функция ScopeFunction для добавления фильтра.
+        protected bool ExtendFilter()
+        {
+            bool result = true;
+
+            foreach (var item in PropScopeRelations)
+            {
+                //_logger.LogDebug($"{item.Key} = {item.Value()}");
+                if (!string.IsNullOrWhiteSpace(item.Value()))
+                {
+                    Object fnc;
+                    this.TryGetValue(item.Key, out fnc);
+                    result &= (fnc as SimpleScopeFunction)(item.Value());
+
+                }
+            }
+            return result;
+        }
+
+
+
     }
 }
