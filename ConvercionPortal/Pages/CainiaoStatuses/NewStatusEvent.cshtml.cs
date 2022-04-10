@@ -44,7 +44,7 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
             ViewData["ActivePage"] = "EncloseAndStatuses";
             ViewData["Title"] = "Добавить событие";
 
-            encloseEvent = await _db.GetAsync(EncloseId, EncloseOwnerId);
+            encloseEvent = await _db.GetByIdAsync(EncloseId, EncloseOwnerId);
             if (encloseEvent == null)
                 return NotFound($"Не существует записи с EncloseId = {EncloseId} и EncloseOwnerId = {EncloseOwnerId}");
 
@@ -62,12 +62,13 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
 
           public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-                return Page();
-
-            encloseEvent = await _db.GetAsync(encloseId, encloseOwnerId);
+            
+            encloseEvent = await _db.GetByIdAsync(encloseId, encloseOwnerId);
             if (encloseEvent == null)
                 return NotFound($"Не существует записи с EncloseId = {encloseId} и EncloseOwnerId = {encloseOwnerId}");
+
+            if (!ModelState.IsValid)
+                return Page();
 
             if (statusHistoryOrder.HasValue)
             {

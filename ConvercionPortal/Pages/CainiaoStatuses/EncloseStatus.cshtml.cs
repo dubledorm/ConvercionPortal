@@ -24,7 +24,7 @@ namespace ConvercionPortal.Pages.CainiaoStatuses
             _logger.LogDebug($"EncloseId: {EncloseId}, EncloseOwnerId: {EncloseOwnerId}");
 
             ViewData["ActivePage"] = "EncloseAndStatuses";
-            encloseEvent = await _db.GetAsync(EncloseId, EncloseOwnerId);
+            encloseEvent = await _db.GetByIdAsync(EncloseId, EncloseOwnerId);
 
             if (encloseEvent == null)
                 return NotFound($"Не существует записи с EncloseId = {EncloseId} и EncloseOwnerId = {EncloseOwnerId}");

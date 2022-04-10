@@ -52,7 +52,7 @@ namespace Data.Stores.Cainiao
             return _encloseEvents.CountDocuments(Filter);
         }
 
-        public async Task<EncloseEvent ?> GetAsync(int encloseId, int encloseOwnerID)
+        public async Task<EncloseEvent ?> GetByIdAsync(int encloseId, int encloseOwnerID)
         {
             var encloseEvent = await _encloseEvents.Find(x => x.EncloseId == encloseId
                                                              && x.EncloseOwnerId == encloseOwnerID)

@@ -6,7 +6,7 @@ namespace Data.Stores.Cainiao
     public interface IEncloseEventsStore
     {
         Task<EncloseEvent> CreateAsync(EncloseEvent encloseEvent);
-        Task<EncloseEvent?> GetAsync(int encloseId, int encloseOwnerID);
+        Task<EncloseEvent?> GetByIdAsync(int encloseId, int encloseOwnerID);
         Task<List<EncloseEvent>> GetAsync(int skip = 0);
         Task<long> CountAsync();
         Task UpdateAsync(EncloseEvent encloseEvent);
